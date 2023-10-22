@@ -1,0 +1,28 @@
+.theader {
+  color: #fff;
+  font-size: 18px;
+}
+
+.tblHeader {
+  position: sticky;
+  top: 100px;
+  z-index: 2000;
+  background-color: #003f7d;
+  color: white;
+  height: 40px;
+}
+
+td {
+  font-size: medium;
+}
+
+.pageLabel {
+  margin-right: 10px;
+}
+
+.tblPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 35px;
+}
