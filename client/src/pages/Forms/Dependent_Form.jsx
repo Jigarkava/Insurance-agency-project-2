@@ -31,7 +31,7 @@ import {
 import DependentSchema from "../../schemas/Agent/DependentSchema";
 // import { useState, useEffect } from "react";
 
-const Dependent_Form = ({ formName, relationShipName }) => {
+const Dependent_Form = ({ formName, relationShipName, menuOption }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -81,14 +81,13 @@ const Dependent_Form = ({ formName, relationShipName }) => {
     trigger("image");
   };
 
-  // Ensure that the "Relation With Main Member" select updates on gender change
   const handleGenderChange = (e) => {
     const gender = e.target.value;
     setValue("gender", gender);
     if (gender === "Male") {
-      setValue("relation", "Son");
+      setValue("relation", menuOption[0]);
     } else if (gender === "Female") {
-      setValue("relation", "Daughter");
+      setValue("relation", menuOption[1]);
     }
   };
 
@@ -235,13 +234,18 @@ const Dependent_Form = ({ formName, relationShipName }) => {
                 {...register("relation")}
                 value={
                   watch("relation") ||
-                  (watch("gender") === "Male" ? "Son" : "Daughter")
+                  (watch("gender") === "Male" ? menuOption[0] : menuOption[1])
                 }
                 onChange={(e) => setValue("relation", e.target.value)}
                 error={!!errors.relation}
               >
-                <MenuItem value={"Son"}>Son</MenuItem>
-                <MenuItem value={"Daughter"}>Daughter</MenuItem>
+                {menuOption?.map((option, i) => (
+                  <MenuItem key={i} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+                {/* <MenuItem value={"Son"}>Son</MenuItem>
+                <MenuItem value={"Daughter"}>Daughter</MenuItem> */}
               </Select>
               {errors.relation && (
                 <FormHelperText error>

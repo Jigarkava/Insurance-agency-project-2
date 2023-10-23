@@ -9,49 +9,36 @@ import classes from "./ApplicantData.module.css";
 import { Chip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import api from "../utils/api";
+import { useDispatch, useSelector } from "react-redux";
+import { getApplicantData } from "../store/slices/applicantSlice";
 
 const ApplicantData = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
-  const [totalCount, setTotalCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-  const [noResults, setNoResults] = useState(false);
-
-  const token = JSON.parse(localStorage.getItem("token"))
+  const dispatch = useDispatch();
 
   const handleView = (viewData) => {
     navigate(`view/${viewData}`);
   };
+
+  const alldata = useSelector((state) => state?.applicant?.alldata);
+  console.log(alldata);
 
   useEffect(() => {
     fetchData(page, limit, searchTerm);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, limit]);
 
-  const fetchData = async (currentPage, currentLimit, searchTerms) => {
-    try {
-      const queryParams = {
-        pageNumber: currentPage,
-        limit: currentLimit,
-        searchKey: searchTerms,
-      };
+  const fetchData = (currentPage, currentLimit, searchTerms) => {
+    const queryParams = {
+      pageNumber: currentPage,
+      limit: currentLimit,
+      searchKey: searchTerms,
+    };
 
-      const response = await api.get("/admin/customer", {
-        headers: {
-          Authorization:token,
-        },
-        params: queryParams,
-      });
-
-      setData(response.data.customers);
-      setTotalCount(response.data.count);
-      setNoResults(response.data.customers.length === 0);
-    } catch (error) {
-      console.log(error.message);
-    }
+    dispatch(getApplicantData(queryParams));
   };
 
   const handlePageChange = (event, newPage) => {
@@ -67,7 +54,7 @@ const ApplicantData = () => {
     fetchData(page, limit, searchTerm);
   };
 
-  const pageCount = Math.ceil(totalCount / limit);
+  const pageCount = Math.ceil(alldata?.count / limit);
 
   return (
     <div style={{ marginTop: "80px" }}>
@@ -90,7 +77,7 @@ const ApplicantData = () => {
           Search
         </Button>
       </div>
-      {noResults ? (
+      {alldata?.customers?.length === 0 ? (
         <p>No search results found</p>
       ) : (
         <table cellSpacing={0}>
@@ -108,7 +95,7 @@ const ApplicantData = () => {
                 <hr />
               </td>
             </tr>
-            {data?.map((item) => (
+            {alldata?.customers?.map((item) => (
               <tr key={item.id}>
                 <td>{item?.agentId}</td>
                 <td>

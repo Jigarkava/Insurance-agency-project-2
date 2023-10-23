@@ -2,11 +2,9 @@ import { Box, Typography, Grid, TextField, Button, Paper } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import adminValidationSchema from "../schemas/Admin/AdminSchema";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../store/slices/authSlice";
+import { adminLogin } from "../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import api from "../utils/api";
 import { useEffect } from "react";
 
 const AdminLogin = () => {
@@ -17,6 +15,7 @@ const AdminLogin = () => {
     if (getToken) {
       navigate("/dashboard");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {
@@ -32,16 +31,10 @@ const AdminLogin = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await api.post("/admin/login", data);
-
-      const token = response.headers.authorization;
-      console.log(token);
-
-      dispatch(setLogin({ token }));
-      toast.success("Login Successfully !");
+      await dispatch(adminLogin(data));
       navigate("/dashboard", { replace: true });
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.log(error);
     }
     reset();
   };

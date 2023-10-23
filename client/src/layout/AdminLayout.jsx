@@ -4,11 +4,10 @@ const AdminLayout = () => {
   // eslint-disable-next-line no-unused-vars
   // const { isAuthenticated, token } = useSelector((state) => state.auth);
   // console.log(token);
-  // let getToken = localStorage.getItem("token");
+  let getToken = localStorage.getItem("token");
   //
   // return getToken   ? (
-  // token && isAuthenticated === true ? (
-  return (
+  return getToken ? (
     <>
       <Header />
       <h1>hello</h1>
@@ -16,10 +15,9 @@ const AdminLayout = () => {
         <Outlet />
       </main>
     </>
+  ) : (
+    <Navigate to={"/admin/login"} />
   );
-  // ) : (
-  //   <Navigate to={"/admin/login"} />
-  // );
 };
 
 export default AdminLayout;

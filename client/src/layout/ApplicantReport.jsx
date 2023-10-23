@@ -1,20 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
+// import axios from "axios";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import api from "../utils/api";
 import { Box, Paper } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { getClientById, approveClient } from "../store/slices/applicantSlice";
 
 const ApplicantReport = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [clientDetails, setClientDetails] = useState("");
-
-  const token = JSON.parse(localStorage.getItem("token"));
-  console.log(token);
+  const dispatch = useDispatch();
+  const { clientDetails } = useSelector((state) => state.applicant);
+  console.log(clientDetails);
 
   useEffect(() => {
     fetchData();
@@ -22,32 +21,13 @@ const ApplicantReport = () => {
   }, []);
 
   const fetchData = () => {
-    api
-      .get(`http://localhost:8000/admin/customer/${id}`)
-      .then((res) => {
-        setClientDetails(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    dispatch(getClientById(id));
   };
 
-  const handleApprove = async (id) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:8000/admin/customer/${id}`,
-        {},
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      );
-      toast.success(response.data.message);
+  const handleApprove = (id) => {
+    dispatch(approveClient(id)).then(() => {
       navigate("/dashboard");
-    } catch (error) {
-      toast.error(error.message);
-    }
+    });
   };
 
   return (

@@ -1,9 +1,6 @@
 import {
   Login,
-  // Children_Form,
   Applicant_Form,
-  // Parents_Form,
-  // Spouse_Form,
   FamilyCards,
   ViewApplicantDetails,
   LandingPage,
@@ -12,33 +9,46 @@ import { Routes, Route } from "react-router-dom";
 import Dependent_Form from "../pages/Forms/Dependent_Form";
 
 const AgentRoutes = () => {
+  const childrenMenu = ["Son", "Daughter"];
+  const spouseMenu = ["Husband", "Wife"];
+  const parentMenu = ["Father", "Mother"];
+
   return (
     <Routes>
       <Route index path="/" element={<LandingPage />} />
       <Route
         path="/children-form"
         element={
-          <Dependent_Form formName={"Children"} relationShipName={"Child"} />
+          <Dependent_Form
+            formName={"Children"}
+            relationShipName={"Child"}
+            menuOption={childrenMenu}
+          />
         }
       />
       <Route
         path="/spouse-form"
         element={
-          <Dependent_Form formName={"Spouse"} relationShipName={"Spouse"} />
+          <Dependent_Form
+            formName={"Spouse"}
+            relationShipName={"Spouse"}
+            menuOption={spouseMenu}
+          />
         }
       />
       <Route
         path="/parent-form"
         element={
-          <Dependent_Form formName={"Parent"} relationShipName={"Parent"} />
+          <Dependent_Form
+            formName={"Parent"}
+            relationShipName={"Parent"}
+            menuOption={parentMenu}
+          />
         }
       />
       <Route path="/login" element={<Login />} />
       <Route path="/applicant-form" element={<Applicant_Form />} />
       <Route path="/family-member" element={<FamilyCards />} />
-      {/* <Route path="/children-form" element={<Children_Form />} />
-      <Route path="/spouse-form" element={<Spouse_Form />} />
-      <Route path="/parent-form" element={<Parents_Form />} /> */}
       <Route path="/view_applicants_info" element={<ViewApplicantDetails />} />
     </Routes>
   );
