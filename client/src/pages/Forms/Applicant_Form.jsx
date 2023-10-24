@@ -32,7 +32,8 @@ const Applicant_Form = () => {
   let agentId = useSelector((state) => state?.formData?.applicant?.agentId);
 
   useEffect(() => {
-    if (agentId === undefined) {
+    const getAgentId = JSON.parse(localStorage.getItem("agentId"));
+    if (getAgentId === undefined || getAgentId === null) {
       navigate("/login");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

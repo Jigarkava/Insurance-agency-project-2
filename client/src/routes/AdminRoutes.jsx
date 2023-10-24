@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { AdminLayout, AdminLogin, ApplicantReport } from "../layout";
 import ApplicantData from "../components/ApplicantData";
 

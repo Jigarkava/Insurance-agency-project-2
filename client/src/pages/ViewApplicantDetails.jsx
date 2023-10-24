@@ -1,10 +1,15 @@
 /* eslint-disable no-unused-vars */
 import { Box, Typography, Button } from "@mui/material";
 import Table from "../components/table";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import api from "../utils/api";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { clearAllData, postClientData } from "../store/slices/formDataSlice";
 
 const ViewApplicantDetails = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const dependentsData = useSelector((state) => state.formData.dependents);
   const applicantData = useSelector((state) => state?.formData?.applicant);
 
@@ -60,18 +65,17 @@ const ViewApplicantDetails = () => {
 
   console.log(finalData());
 
-  const handleProceed = async () => {
+  const handleProceed = () => {
     const updatedData = finalData();
-
     console.log(updatedData);
-
-    try {
-      const response = await api.post("/agent/customer", updatedData);
-
-      console.log("response: " + response.data);
-    } catch (error) {
-      console.log(error.message);
-    }
+    dispatch(postClientData(updatedData))
+      .then(() => {
+        console.warn("ok");
+      })
+      .catch(() => {
+        console.warn("res");
+      });
+    // navigate("/login");
   };
 
   return (

@@ -199,9 +199,11 @@ const Dependent_Form = ({ formName, relationShipName, menuOption }) => {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue={
-                  dependentDetails
+                  formName === "Spouse" && getApplicantGender === "Male"
+                    ? "Female"
+                    : dependentDetails && dependentDetails.gender
                     ? dependentDetails.gender
-                    : getApplicantGender
+                    : "Male"
                 }
                 name="radio-buttons-group"
                 row
@@ -234,7 +236,7 @@ const Dependent_Form = ({ formName, relationShipName, menuOption }) => {
                 {...register("relation")}
                 value={
                   watch("relation") ||
-                  (watch("gender") === "Male" ? menuOption[0] : menuOption[1])
+                  (watch("gender") === "Male" ? menuOption[1] : menuOption[0])
                 }
                 onChange={(e) => setValue("relation", e.target.value)}
                 error={!!errors.relation}
@@ -244,8 +246,6 @@ const Dependent_Form = ({ formName, relationShipName, menuOption }) => {
                     {option}
                   </MenuItem>
                 ))}
-                {/* <MenuItem value={"Son"}>Son</MenuItem>
-                <MenuItem value={"Daughter"}>Daughter</MenuItem> */}
               </Select>
               {errors.relation && (
                 <FormHelperText error>
