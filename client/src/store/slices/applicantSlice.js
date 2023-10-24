@@ -15,9 +15,11 @@ export const getApplicantData = createAsyncThunk(
         params: payload,
       });
       console.log(response.data);
+      alert("ok");
       return response.data;
     } catch (error) {
       toast.error(error.response.data.message);
+      alert("bad");
     }
   }
 );

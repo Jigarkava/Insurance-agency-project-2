@@ -27,6 +27,7 @@ const ApplicantData = () => {
   console.log(alldata);
 
   useEffect(() => {
+    alert("data");
     fetchData(page, limit, searchTerm);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, limit]);

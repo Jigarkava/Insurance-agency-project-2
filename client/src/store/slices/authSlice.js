@@ -9,14 +9,17 @@ const initialState = {
 
 export const adminLogin = createAsyncThunk("adminLogin", async (data) => {
   console.log(data);
-  try {
-    const response = await api.post("/admin/login", data);
-    const token = response.headers.authorization;
-    localStorage.setItem("token", JSON.stringify(token));
-    toast.success("Login Successful");
-  } catch (error) {
-    toast.error(error.response.data.message);
-  }
+  const response = await api.post("/admin/login", data);
+  alert("Second");
+  return response;
+
+  // const token = response.headers.authorization;
+  // localStorage.setItem("token", JSON.stringify(token));
+  // toast.success("Login Successful");
+  // try {
+  // } catch (error) {
+  //   toast.error(error.response.data.message);
+  // }
 });
 
 const authSlice = createSlice({

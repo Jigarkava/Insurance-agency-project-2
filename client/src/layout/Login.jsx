@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { adminLogin } from "../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
+import { toast } from "react-toastify";
 const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,10 +31,14 @@ const AdminLogin = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      await dispatch(adminLogin(data));
+      const response = await dispatch(adminLogin(data)).unwrap();
+      alert("first");
+      const token = response.headers.authorization;
+      localStorage.setItem("token", JSON.stringify(token));
+      toast.success("Login Successful");
       navigate("/dashboard", { replace: true });
     } catch (error) {
-      console.log(error);
+      console.warn("err", error.message);
     }
     reset();
   };
