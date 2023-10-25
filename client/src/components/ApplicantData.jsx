@@ -28,6 +28,7 @@ const ApplicantData = () => {
 
   useEffect(() => {
     alert("data");
+    console.log(localStorage.getItem("token"));
     fetchData(page, limit, searchTerm);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, limit]);
