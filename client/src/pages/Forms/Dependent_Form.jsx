@@ -28,6 +28,7 @@ import {
   editDependentData,
 } from "../../store/slices/formDataSlice";
 import DependentSchema from "../../schemas/Agent/DependentSchema";
+import childrenValidationSchema from "../../schemas/ChildrenSchema";
 
 const Dependent_Form = ({ formName, relationShipName, menuOption }) => {
   const dispatch = useDispatch();
@@ -53,7 +54,9 @@ const Dependent_Form = ({ formName, relationShipName, menuOption }) => {
   } = useForm({
     mode: "all",
     defaultValues: dependentDetails,
-    resolver: yupResolver(DependentSchema),
+    resolver: yupResolver(
+      formName === "Children" ? childrenValidationSchema : DependentSchema
+    ),
   });
 
   const image = watch("image");
