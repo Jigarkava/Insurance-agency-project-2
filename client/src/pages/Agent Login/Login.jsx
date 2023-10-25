@@ -1,4 +1,4 @@
-import { Box, Typography, Grid, TextField, Button, Paper } from "@mui/material";
+import { Box, Typography, Grid, TextField, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoginValidationSchema from "../../schemas/Agent/LoginSchema";
@@ -42,24 +42,34 @@ const Login = () => {
       <Box
         sx={{
           minHeight: "100vh",
-          color: "red",
+          backgroundColor: "#eef2f6",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Paper elevation={2}>
-          <Box mt={4}>
-            <Typography variant="h4" color="purple" textAlign={"center"} p={2}>
-              Welcome Agent
-            </Typography>
-          </Box>
-
-          <Box m={10}>
+        <Box
+          elevation={2}
+          sx={{
+            width: "510px",
+            backgroundColor: "#ffffff",
+          }}
+        >
+          <Box m={4}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={3} justifyContent={"center"}>
-                <Grid item sm={8}>
+                <Grid item sm={12}>
+                  <Typography
+                    variant="h4"
+                    color="purple"
+                    textAlign={"center"}
+                    p={2}
+                  >
+                    Welcome Agent
+                  </Typography>
+                </Grid>
+                <Grid item sm={12}>
                   <TextField
                     fullWidth
                     label="First Name"
@@ -68,7 +78,7 @@ const Login = () => {
                     helperText={errors.firstname?.message}
                   />
                 </Grid>
-                <Grid item sm={8}>
+                <Grid item sm={12}>
                   <TextField
                     fullWidth
                     label="Last Name"
@@ -77,7 +87,7 @@ const Login = () => {
                     helperText={errors.lastname?.message}
                   />
                 </Grid>
-                <Grid item sm={8}>
+                <Grid item sm={12}>
                   <TextField
                     fullWidth
                     label="Agent Code"
@@ -86,7 +96,7 @@ const Login = () => {
                     helperText={errors.agentId?.message}
                   />
                 </Grid>
-                <Grid item sm={8}>
+                <Grid item sm={12}>
                   <Button
                     type="submit"
                     variant="contained"
@@ -99,7 +109,7 @@ const Login = () => {
               </Grid>
             </form>
           </Box>
-        </Paper>
+        </Box>
       </Box>
     </>
   );

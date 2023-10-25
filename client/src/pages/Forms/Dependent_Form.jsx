@@ -18,7 +18,6 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
@@ -29,7 +28,6 @@ import {
   editDependentData,
 } from "../../store/slices/formDataSlice";
 import DependentSchema from "../../schemas/Agent/DependentSchema";
-// import { useState, useEffect } from "react";
 
 const Dependent_Form = ({ formName, relationShipName, menuOption }) => {
   const dispatch = useDispatch();
@@ -124,13 +122,13 @@ const Dependent_Form = ({ formName, relationShipName, menuOption }) => {
     data.dateOfBirth = new Date(data.dateOfBirth).toISOString().split("T")[0];
     data.relationShip = relationShipName;
     data.dependentId = nanoid();
-
     dispatch(addDependentsData(data));
+    toast.success("Data Saved Successfully");
     navigate("/family-member");
   };
 
   return (
-    <Box>
+    <Box sx={{ backgroundColor: "white", height: "100vh" }}>
       <form>
         <Grid p={3} container spacing={2}>
           {dependentId !== undefined && <h1>{dependentId}</h1>}

@@ -5,6 +5,7 @@ const Cards = ({ imgname, name, onAdd }) => {
     <Box
       sx={{
         display: "flex",
+        backgroundColor: "#fffffff4",
         flexDirection: "column",
         justifyContent: "space-around",
         alignItems: "center",

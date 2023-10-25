@@ -11,10 +11,8 @@ export const adminLogin = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await api.post("/admin/login", data);
-      console.log(response);
       return response;
     } catch (error) {
-      console.warn(error);
       return rejectWithValue(error.response.data);
     }
   }
@@ -26,7 +24,6 @@ const authSlice = createSlice({
   reducers: {
     setLogin: (state, action) => {
       state.isAuthenticated = true;
-      console.log(action.payload.token);
       state.token = action.payload.token;
       localStorage.setItem("token", JSON.stringify(action.payload.token));
     },

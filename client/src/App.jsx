@@ -1,25 +1,11 @@
-// import { useEffect, useState } from "react";
 import AdminRoutes from "./routes/AdminRoutes";
-import AgentRoutes from './routes/AgentRoutes'; 
-// import { useNavigate } from "react-router-dom";
+import AgentRoutes from "./routes/AgentRoutes";
 
-function App() {  
-
-// const [token,setToken] = useState()
-// const navigate = useNavigate()
-
-// useEffect(()=>{
-//   const getToken = localStorage.getItem('token');
-//   setToken(getToken);
-// },[]);
-
-
+function App() {
   return (
     <>
-
-    {/* {!token ?  <AgentRoutes/> : navigate('/admin/login') }     */}
-    <AgentRoutes/>
-    <AdminRoutes/>
+      <AgentRoutes />
+      <AdminRoutes />
     </>
   );
 }

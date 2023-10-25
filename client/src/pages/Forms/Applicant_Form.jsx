@@ -39,8 +39,6 @@ const Applicant_Form = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(agentId);
-
   const {
     register,
     handleSubmit,
@@ -65,11 +63,9 @@ const Applicant_Form = () => {
     const reader = new FileReader();
     reader.readAsDataURL(selectedFile);
     reader.onload = () => {
-      // selectedFile.src = reader.result;
       setValue("image", reader.result);
       trigger("image");
     };
-    // setValue("image", selectedFile);
     console.log(selectedFile);
     trigger("image");
   };
@@ -89,8 +85,6 @@ const Applicant_Form = () => {
 
   const onSubmit = (data) => {
     data.dateOfBirth = new Date(data.dateOfBirth).toISOString().split("T")[0];
-    // ! for editting purpose
-    // data.image = data.image.src
     console.log(data);
     // ! set agentId
     agentId ? (data.agentId = agentId) : undefined;
@@ -107,7 +101,7 @@ const Applicant_Form = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ backgroundColor: "white" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid p={3} container spacing={2}>
           <Grid item sm={12}>
@@ -125,7 +119,7 @@ const Applicant_Form = () => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              label="FirstName"
+              label="First Name"
               {...register("firstName")}
               error={!!errors.firstName}
               helperText={errors.firstName?.message}
@@ -135,7 +129,7 @@ const Applicant_Form = () => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              label="LastName"
+              label="Last Name"
               {...register("lastName")}
               error={!!errors.lastName}
               helperText={errors.lastName?.message}
@@ -145,7 +139,6 @@ const Applicant_Form = () => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              // type="number"
               label="Aadhar Number"
               {...register("aadharNumber")}
               error={!!errors.aadharNumber}
@@ -163,9 +156,7 @@ const Applicant_Form = () => {
               InputLabelProps={{
                 shrink: true,
               }}
-              {...register("dateOfBirth", {
-                // valueAsDate: "true",
-              })}
+              {...register("dateOfBirth")}
               error={!!errors.dateOfBirth}
               helperText={errors.dateOfBirth?.message}
             />
@@ -176,9 +167,9 @@ const Applicant_Form = () => {
               <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="Male"
                 name="radio-buttons-group"
                 row
+                defaultValue={applicantDetails?.gender || "Male"}
               >
                 <FormControlLabel
                   value="Male"
@@ -249,12 +240,7 @@ const Applicant_Form = () => {
                     p: "3px",
                   }}
                 >
-                  <img
-                    width={"250px"}
-                    // src={URL.createObjectURL(image)}
-                    src={image}
-                    alt="Preview"
-                  />
+                  <img width={"250px"} src={image} alt="Preview" />
                   <Typography mt={1} mb={1} variant="body2" color="initial">
                     {image.name}
                   </Typography>

@@ -1,11 +1,7 @@
 /* eslint-disable react/prop-types */
-// import Children_Form from "./Forms/Children_Form";
-// import Parents_Form from './Forms/Parents_Form'
-// import Spouse_Form from './Forms/Spouse_Form';
 import { useNavigate } from "react-router-dom";
 import { deleteDependent } from "../store/slices/formDataSlice";
 import { useDispatch } from "react-redux";
-// import { toast } from "react-toastify";
 import "./Table.scss";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
@@ -15,19 +11,14 @@ const Table = ({ data, applicant_information }) => {
   const navigate = useNavigate();
 
   const handleView = (editDetails) => {
-    console.log(editDetails);
     if (editDetails.relationShip === "Child") {
-      // <Children_Form childrenDetails={editDetails} />
       navigate("/children-form", { state: { dependentDetails: editDetails } });
     } else if (editDetails.relationShip === "Parent") {
-      // <Parents_Form parentDetails={editDetails} />
       navigate("/parent-form", { state: { dependentDetails: editDetails } });
     } else if (editDetails.relationShip === "Spouse") {
-      // <Spouse_Form spouseDetails={editDetails} />
       navigate("/spouse-form", { state: { dependentDetails: editDetails } });
     } else {
       navigate("/applicant-form", { state: { applicantDetails: editDetails } });
-      // toast.error('path not found')
     }
   };
 
@@ -37,10 +28,6 @@ const Table = ({ data, applicant_information }) => {
       dispatch(deleteDependent(id));
     }
   };
-
-  console.log(data);
-  console.log(applicant_information);
-  console.log(applicant_information?.firstName);
 
   return (
     <table cellSpacing={0}>
@@ -86,7 +73,6 @@ const Table = ({ data, applicant_information }) => {
             <td>{curelem?.dateOfBirth}</td>
             <td>{curelem?.gender}</td>
             <td>
-              {/* <button onClick={() => handleView(curelem)}>+</button> */}
               <Button
                 size="small"
                 onClick={() => handleView(curelem)}
@@ -106,7 +92,6 @@ const Table = ({ data, applicant_information }) => {
               >
                 Delete
               </Button>
-              {/* <button onClick={() => handleDelete(curelem.dependentId)}>-</button> */}
             </td>
           </tr>
         ))}

@@ -4,6 +4,11 @@ a {
   font-size: 1.25rem;
 }
 
+body {
+  margin: 0;
+  background-color: #eef2f6;
+}
+
 .nav {
   display: flex;
   align-items: center;

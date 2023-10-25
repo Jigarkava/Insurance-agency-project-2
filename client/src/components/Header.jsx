@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logo from "../assets/Logo.png";
 import { useDispatch } from "react-redux";
 import { setLogout } from "../store/slices/authSlice";
@@ -32,13 +32,9 @@ const Header = () => {
       }}
     >
       <Box>
-        <img src={Logo} alt="Logo" height={60} width={80} />
-      </Box>
-
-      <Box>
-        <ul className="nav">
-          <NavLink to={"/dashboard"}>Home</NavLink>
-        </ul>
+        <Link to="/dashboard">
+          <img src={Logo} alt="Logo" height={60} width={80} />
+        </Link>
       </Box>
 
       <Box>

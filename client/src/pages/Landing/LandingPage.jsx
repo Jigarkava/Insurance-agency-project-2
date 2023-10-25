@@ -9,7 +9,7 @@ const LandingPage = () => {
       <Box
         sx={{
           height: "100vh",
-          color: "red",
+          backgroundColor: "#eef2f6",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -28,7 +28,7 @@ const LandingPage = () => {
             boxShadow: "2",
           }}
         >
-          <img src={Logo} height={200} alt="not load " />
+          <img src={Logo} height={180} alt="not load " />
 
           <Typography
             variant="body2"

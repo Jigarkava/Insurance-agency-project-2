@@ -9,10 +9,8 @@ let initialState = {
 export const postClientData = createAsyncThunk(
   "postClientData",
   async (dispatch) => {
-    console.log(dispatch);
     try {
       const response = await api.post("/agent/customer", dispatch);
-      console.log("response: " + response.data);
       toast.success("Data Sent to Admin Successfully");
       localStorage.removeItem("agentId");
       return response;
@@ -69,6 +67,7 @@ const formDataSlice = createSlice({
     clearAllData: (state) => {
       state.applicant = {};
       state.dependents = [];
+      console.log("clear success");
     },
   },
 });

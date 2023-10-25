@@ -24,14 +24,13 @@ const ApplicantData = () => {
   };
 
   const alldata = useSelector((state) => state?.applicant?.alldata);
-  console.log(alldata);
 
   useEffect(() => {
-    alert("data");
-    console.log(localStorage.getItem("token"));
-    fetchData(page, limit, searchTerm);
+    if (searchTerm === "") {
+      fetchData(page, limit, searchTerm);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, limit]);
+  }, [page, limit, searchTerm]);
 
   const fetchData = (currentPage, currentLimit, searchTerms) => {
     const queryParams = {
@@ -39,11 +38,10 @@ const ApplicantData = () => {
       limit: currentLimit,
       searchKey: searchTerms,
     };
-
     dispatch(getApplicantData(queryParams));
   };
 
-  const handlePageChange = (event, newPage) => {
+  const handlePageChange = (newPage) => {
     setPage(newPage);
   };
 
@@ -59,7 +57,13 @@ const ApplicantData = () => {
   const pageCount = Math.ceil(alldata?.count / limit);
 
   return (
-    <div style={{ marginTop: "80px" }}>
+    <div
+      style={{
+        marginTop: "90px",
+        backgroundColor: "#ffffff",
+        padding: "18px",
+      }}
+    >
       <div
         style={{
           display: "flex",
@@ -67,6 +71,7 @@ const ApplicantData = () => {
           justifyContent: "flex-end",
           columnGap: "10px",
           marginBottom: "10px",
+          marginRight: "10px",
         }}
       >
         <TextField

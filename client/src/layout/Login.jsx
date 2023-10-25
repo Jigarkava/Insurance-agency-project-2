@@ -1,15 +1,29 @@
-import { Box, Typography, Grid, TextField, Button, Paper } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  Paper,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import adminValidationSchema from "../schemas/Admin/AdminSchema";
 import { useDispatch } from "react-redux";
 import { adminLogin } from "../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
 const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+
   useEffect(() => {
     const getToken = localStorage.getItem("token");
     if (getToken) {
@@ -17,6 +31,10 @@ const AdminLogin = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handlePasswordChange = () => {
+    setShowPassword(!showPassword);
+  };
 
   const {
     register,
@@ -28,28 +46,26 @@ const AdminLogin = () => {
     resolver: yupResolver(adminValidationSchema),
   });
 
-  const onSubmit = async (data) => {
-    console.log(data);
-    try {
-      const response = await dispatch(adminLogin(data)).unwrap();
-      const token = response.headers.authorization;
-      alert(token);
-      localStorage.setItem("token", JSON.stringify(token));
-      toast.success("Login Successful");
-      setTimeout(() => {
+  const onSubmit = (data) => {
+    dispatch(adminLogin(data))
+      .unwrap()
+      .then((response) => {
+        const token = response.headers.authorization;
+        localStorage.setItem("token", token);
+        toast.success("Login Successful");
+        reset();
         navigate("/dashboard", { replace: true });
-      }, 2000);
-    } catch (error) {
-      console.warn(error);
-      toast.error(error.message);
-    }
-    reset();
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
 
   return (
     <>
       <Box
         sx={{
+          backgroundColor: "#eef2f6",
           height: "100vh",
           color: "red",
           display: "flex",
@@ -58,16 +74,20 @@ const AdminLogin = () => {
           justifyContent: "center",
         }}
       >
-        <Paper elevation={2} sx={{ width: "500px" }}>
-          <Box mt={4}>
-            <Typography variant="h4" color="purple" textAlign={"center"} p={2}>
-              Welcome Admin
-            </Typography>
-          </Box>
-
+        <Paper elevation={2} sx={{ width: "450px", borderRadius: "8px" }}>
           <Box m={5}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={3} justifyContent={"center"}>
+                <Grid item sm={12}>
+                  <Typography
+                    variant="h4"
+                    color="purple"
+                    textAlign={"center"}
+                    p={2}
+                  >
+                    Welcome Admin
+                  </Typography>
+                </Grid>
                 <Grid item sm={12}>
                   <TextField
                     fullWidth
@@ -84,11 +104,25 @@ const AdminLogin = () => {
                     fullWidth
                     id="password"
                     label="Password"
+                    type={showPassword ? "text" : "password"}
                     {...register("password", {
                       required: "Please Enter password",
                     })}
                     error={!!errors.password}
                     helperText={errors.password?.message}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handlePasswordChange}>
+                            {showPassword ? (
+                              <VisibilityOffIcon />
+                            ) : (
+                              <VisibilityIcon />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </Grid>
 

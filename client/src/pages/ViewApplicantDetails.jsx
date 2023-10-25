@@ -1,15 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { Box, Typography, Button } from "@mui/material";
-import Table from "../components/table";
+import Table from "../components/Table";
 import { useSelector, useDispatch } from "react-redux";
-import api from "../utils/api";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { clearAllData, postClientData } from "../store/slices/formDataSlice";
+import { useNavigate } from "react-router-dom";
 
 const ViewApplicantDetails = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const naviagte = useNavigate();
   const dependentsData = useSelector((state) => state.formData.dependents);
   const applicantData = useSelector((state) => state?.formData?.applicant);
 
@@ -20,7 +18,6 @@ const ViewApplicantDetails = () => {
     (elem) => elem.relationShip === "Child"
   );
 
-  console.log(childData);
   const spouseData = dependentsData.filter(
     (elem) => elem.relationShip === "Spouse"
   );
@@ -63,24 +60,23 @@ const ViewApplicantDetails = () => {
     return updatedData;
   };
 
-  console.log(finalData());
-
   const handleProceed = () => {
     const updatedData = finalData();
-    console.log(updatedData);
+
     dispatch(postClientData(updatedData))
       .then(() => {
         console.warn("ok");
+        dispatch(clearAllData());
+        naviagte("/");
       })
       .catch(() => {
         console.warn("res");
       });
-    // navigate("/login");
   };
 
   return (
     <>
-      <Box>
+      <Box sx={{ backgroundColor: "white" }}>
         <Box
           sx={{
             zIndex: 1000,
@@ -149,7 +145,9 @@ const ViewApplicantDetails = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: "white",
           mt: 3,
+          p: 2,
         }}
       >
         <Button
