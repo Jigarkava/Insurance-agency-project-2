@@ -32,13 +32,16 @@ const AdminLogin = () => {
     console.log(data);
     try {
       const response = await dispatch(adminLogin(data)).unwrap();
-      alert("first");
       const token = response.headers.authorization;
+      alert(token);
       localStorage.setItem("token", JSON.stringify(token));
       toast.success("Login Successful");
-      navigate("/dashboard", { replace: true });
+      setTimeout(() => {
+        navigate("/dashboard", { replace: true });
+      }, 2000);
     } catch (error) {
-      console.warn("err", error.message);
+      console.warn(error);
+      toast.error(error.message);
     }
     reset();
   };

@@ -1,26 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../utils/api";
-import { toast } from "react-toastify";
 
 const initialState = {
   isAuthenticated: false,
   token: null,
 };
 
-export const adminLogin = createAsyncThunk("adminLogin", async (data) => {
-  console.log(data);
-  const response = await api.post("/admin/login", data);
-  alert("Second");
-  return response;
-
-  // const token = response.headers.authorization;
-  // localStorage.setItem("token", JSON.stringify(token));
-  // toast.success("Login Successful");
-  // try {
-  // } catch (error) {
-  //   toast.error(error.response.data.message);
-  // }
-});
+export const adminLogin = createAsyncThunk(
+  "adminLogin",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await api.post("/admin/login", data);
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.warn(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",

@@ -9,7 +9,7 @@ const initialState = {
 
 export const getApplicantData = createAsyncThunk(
   "getApplicantData",
-  async (payload) => {
+  async (payload, { rejectWithValue }) => {
     try {
       const response = await api.get("/admin/customer", {
         params: payload,
@@ -18,8 +18,7 @@ export const getApplicantData = createAsyncThunk(
       alert("ok");
       return response.data;
     } catch (error) {
-      toast.error(error.response.data.message);
-      alert("bad");
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
