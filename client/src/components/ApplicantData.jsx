@@ -38,10 +38,12 @@ const ApplicantData = () => {
       limit: currentLimit,
       searchKey: searchTerms,
     };
+    console.log(queryParams);
     dispatch(getApplicantData(queryParams));
   };
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = (event, newPage) => {
+    console.log(newPage);
     setPage(newPage);
   };
 

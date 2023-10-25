@@ -16,8 +16,18 @@ const DependentSchema = Yup.object({
       "FirstName Must Start With a Letter"
     ),
   dateOfBirth: Yup.date()
-    .typeError("Date Of Birth Is required")
+    .typeError("Please Enter Date Of Birth")
     .required("Please enter date of birth")
+    .test(
+      "min",
+      "Age must be greater than or equal to 18 years",
+      (value) => new Date().getFullYear() - new Date(value).getFullYear() >= 18
+    )
+    .test(
+      "max",
+      "Age is always less than 65 years",
+      (value) => new Date().getFullYear() - new Date(value).getFullYear() <= 65
+    )
     .nullable(),
   aadharNumber: Yup.string()
     .required("Please enter addhar number")

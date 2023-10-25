@@ -10,6 +10,7 @@ const initialState = {
 export const getApplicantData = createAsyncThunk(
   "getApplicantData",
   async (payload, { rejectWithValue }) => {
+    console.log(payload);
     try {
       const response = await api.get("/admin/customer", {
         params: payload,
