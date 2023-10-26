@@ -6,7 +6,7 @@ import "./Table.scss";
 import Button from "@mui/material/Button";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import classes from "./ApplicantData.module.css";
-import { Chip } from "@mui/material";
+import { Chip, Skeleton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +24,7 @@ const ApplicantData = () => {
   };
 
   const alldata = useSelector((state) => state?.applicant?.alldata);
+  const isLoading = useSelector((state) => state?.applicant?.isLoading);
 
   useEffect(() => {
     if (searchTerm === "") {
@@ -106,28 +107,44 @@ const ApplicantData = () => {
             </tr>
             {alldata?.customers?.map((item) => (
               <tr key={item.id}>
-                <td>{item?.agentId}</td>
+                <td>{isLoading ? <Skeleton /> : item?.agentId}</td>
                 <td>
-                  {item?.firstName} {item?.lastName}
-                </td>
-                <td>{item?.dependents.length + 1}</td>
-                <td>{item?.createdAt.substring(0, 10)}</td>
-                <td>
-                  <Chip
-                    label={item.isActive ? "Approved" : "Pending"}
-                    color={item.isActive ? "success" : "error"}
-                  />
+                  {isLoading ? (
+                    <Skeleton />
+                  ) : (
+                    `${item?.firstName}  ${item?.lastname}`
+                  )}
                 </td>
                 <td>
-                  <Button
-                    variant="outlined"
-                    color="info"
-                    size="small"
-                    startIcon={<VisibilityIcon />}
-                    onClick={() => handleView(item._id)}
-                  >
-                    View
-                  </Button>
+                  {isLoading ? <Skeleton /> : item?.dependents.length + 1}
+                </td>
+                <td>
+                  {isLoading ? <Skeleton /> : item?.createdAt.substring(0, 10)}
+                </td>
+                <td>
+                  {isLoading ? (
+                    <Skeleton />
+                  ) : (
+                    <Chip
+                      label={item.isActive ? "Approved" : "Pending"}
+                      color={item.isActive ? "success" : "error"}
+                    />
+                  )}
+                </td>
+                <td>
+                  {isLoading ? (
+                    <Skeleton />
+                  ) : (
+                    <Button
+                      variant="outlined"
+                      color="info"
+                      size="small"
+                      startIcon={<VisibilityIcon />}
+                      onClick={() => handleView(item._id)}
+                    >
+                      View
+                    </Button>
+                  )}
                 </td>
               </tr>
             ))}

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 const initialState = {
   alldata: [],
   clientDetails: [],
+  isLoading: false,
 };
 
 export const getApplicantData = createAsyncThunk(
@@ -47,6 +48,11 @@ const applicantSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getApplicantData.fulfilled, (state, action) => {
       state.alldata = action.payload;
+      state.isLoading = false;
+    });
+
+    builder.addCase(getApplicantData.pending, (state) => {
+      state.isLoading = true;
     });
 
     builder.addCase(getClientById.fulfilled, (state, action) => {
